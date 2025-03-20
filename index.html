@@ -2,675 +2,388 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12 Stages of Our Love</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- เพิ่มสำหรับ responsive -->
+    <title>Home - 12 Stages of Our Love</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
-            background: linear-gradient(135deg, #ffe6f0 0%, #ffccdd 100%);
             color: #333;
             text-align: center;
-            padding: 20px 40px;
+            padding: 20px;
             margin: 0;
-            overflow-x: hidden;
-            position: relative;
+            overflow-x: hidden; /* ป้องกันการเลื่อนแนวนอน */
             image-rendering: pixelated;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        h1 {
-            color: #ff3366;
-            font-size: 24px;
-            text-shadow: 2px 2px 0 #000;
-            margin-bottom: 10px;
-            padding: 15px 30px;
-            border: 6px solid #ff66cc;
-            box-shadow: 4px 4px 0 #000;
-            display: inline-block;
-            background: #fff;
-            animation: bounce 1.5s infinite;
-        }
-        p {
-            font-size: 10px;
-            color: #333;
-            text-shadow: 1px 1px 0 #fff;
-            animation: fadeIn 1s ease forwards;
-        }
-        .timeline {
-            max-width: 800px;
-            margin: 0 auto;
             position: relative;
-            flex-grow: 1;
-            padding: 0 10px;
         }
-        .stage {
-            margin: 60px 0;
-            padding: 20px 20px 60px;
-            background-color: #fff;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0 #333;
-            position: relative;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease-in-out;
-            cursor: pointer;
-            width: 400px;
-            animation: sway 3s infinite ease-in-out;
-        }
-        .stage:nth-child(odd) { margin-right: 25%; }
-        .stage:nth-child(even) { margin-left: 25%; }
-        .stage.visible {
-            opacity: 1;
-            transform: translateY(0) rotate(0deg);
-        }
-        .stage::before {
-            content: "Stage " attr(data-stage);
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ff3366;
-            font-size: 12px;
-            text-shadow: 1px 1px 0 #000;
-        }
-        .stage::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
-            background: #ff3366;
-            border: 2px solid #000;
-            border-radius: 50%;
-            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            z-index: 2;
-        }
-        .stage-rope {
-            position: absolute;
-            top: -10px;
+        video#bg-video {
+            position: fixed;
+            top: 0;
             left: 0;
-            width: 100%;
-            height: 2px;
-            background: #999;
-            z-index: 1;
-        }
-        .stage h3 {
-            color: #ff3366;
-            font-size: 14px;
-            margin: 8px 0;
-            text-shadow: 1px 1px 0 #000;
-        }
-        .card {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            perspective: 800px;
-        }
-        .card-inner {
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s;
-            transform-style: preserve-3d;
-            position: relative;
-        }
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border: 2px solid #ff3366;
-        }
-        .card-front { z-index: 2; }
-        .card-back {
-            transform: rotateY(180deg);
-            background: #fff0f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #000;
-            padding: 15px;
-            text-align: center;
-            background-image: 
-                linear-gradient(to right, #ccc 1px, transparent 1px),
-                linear-gradient(to bottom, #ccc 1px, transparent 1px);
-            background-size: 8px 8px;
-            line-height: 20px;
-        }
-        .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            image-rendering: pixelated;
+            z-index: 0;
+            filter: brightness(0.8);
         }
-        .quiz-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #ff66cc;
-            border: 2px solid #000;
+        .game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .game-header {
+            background-color: #ff6699;
+            padding: 20px;
+            border: 6px solid #000;
+            box-shadow: 8px 8px 0 #000;
+            margin-bottom: 40px;
+        }
+        h1 {
             color: #fff;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 30px;
-            padding: 15px 30px;
-            cursor: pointer;
-            box-shadow: 2px 2px 0 #000;
-        }
-        .stage:nth-child(odd) .quiz-btn { right: -140px; }
-        .stage:nth-child(even) .quiz-btn { left: -140px; }
-        .quiz-btn:hover { background: #ff3366; }
-        .quiz-question {
-            position: absolute;
-            top: 0;
-            width: 400px;
-            background: rgba(255, 102, 204, 0.9);
-            border: 3px solid #000;
-            padding: 15px;
-            box-shadow: 3px 3px 0 #333;
-            display: none;
-            font-size: 30px;
-            text-align: left;
-        }
-        .stage:nth-child(odd) .quiz-question { right: -420px; }
-        .stage:nth-child(even) .quiz-question { left: -420px; }
-        .quiz-question p {
-            margin: 0 0 8px;
-            text-shadow: none;
-            color: #000;
-        }
-        .quiz-question button {
-            background: #ff66cc;
-            border: 2px solid #000;
-            color: #fff;
-            font-family: 'Press Start 2P', cursive;
             font-size: 24px;
-            padding: 10px 20px;
-            margin: 4px;
-            cursor: pointer;
-            box-shadow: 2px 2px 0 #000;
+            text-shadow: 4px 4px 0 #000;
+            margin: 0;
+            animation: titleWiggle 5s infinite;
+            line-height: 1.2;
         }
-        .quiz-question button:hover { background: #ff3366; }
-        .loading-screen {
+        .subtitle {
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            margin-top: 10px;
+        }
+        .input-section {
+            background-color: #ffe6f2;
+            border: 6px solid #000;
+            box-shadow: 8px 8px 0 #000;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-section h2 {
+            color: #ff6699;
+            font-size: 18px;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 10px;
+        }
+        .input-section .example {
+            font-size: 12px;
+            color: #ff99cc;
+            text-shadow: 1px 1px 0 #000;
+            margin-bottom: 20px;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .keypad button {
+            background-color: #ff99cc;
+            border: 4px solid #000;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .keypad button:hover {
+            transform: scale(1.1);
+        }
+        .keypad button:active {
+            transform: scale(0.95);
+        }
+        #code-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #fff;
+            border: 4px solid #000;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ff6699;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .dialog-section {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffe6f2;
+            border: 6px solid #000;
+            box-shadow: 8px 8px 0 #000;
+            padding: 20px;
+            max-width: 600px;
+            display: none;
+            z-index: 1000;
+        }
+        .dialog-section.visible {
+            display: block;
+            animation: popUp 0.5s ease;
+        }
+        .dialog-section p {
+            color: #ff6699;
+            font-size: 14px;
+            text-shadow: 1px 1px 0 #000;
+            margin-bottom: 20px;
+        }
+        .dialog-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .dialog-options button {
+            background-color: #ff99cc;
+            border: 4px solid #000;
+            padding: 10px;
+            font-size: 12px;
+            color: #fff;
+            text-shadow: 1px 1px 0 #000;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .dialog-options button:hover {
+            transform: scale(1.05);
+        }
+        .dialog-options button:active {
+            transform: scale(0.95);
+        }
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #ff99cc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: #fff;
-            text-shadow: 4px 4px 0 #000;
-            z-index: 30;
+            background-color: rgba(0, 0, 0, 0.5);
             display: none;
-            animation: fadeIn 0.5s ease-in-out;
+            z-index: 999;
         }
-        .result {
+        .overlay.visible {
+            display: block;
+        }
+        .loading-gif {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px;
-            background: #ff66cc;
-            border: 6px solid #000;
-            padding: 30px;
-            box-shadow: 6px 6px 0 #333;
-            color: #fff;
-            font-size: 30px;
-            text-shadow: 3px 3px 0 #000;
+            width: 200px;
+            height: 200px;
             display: none;
-            z-index: 20;
-            text-align: center;
+            z-index: 1001;
         }
-        .hbd-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px;
-            background: #ff3366;
-            border: 8px solid #000;
-            padding: 40px;
-            box-shadow: 8px 8px 0 #333;
-            color: #fff;
-            font-size: 36px;
-            text-shadow: 4px 4px 0 #000;
-            display: none;
-            z-index: 25;
-            text-align: center;
-        }
-        .hbd-popup img {
-            width: 80%;
-            margin: 20px auto;
+        .loading-gif.visible {
             display: block;
-            image-rendering: pixelated;
         }
-        .close-btn {
+        /* ปรับแต่งสำหรับโทรศัพท์ */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .game-header {
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+            h1 {
+                font-size: 18px;
+            }
+            .subtitle {
+                font-size: 12px;
+            }
+            .input-section {
+                padding: 15px;
+                max-width: 100%;
+            }
+            .keypad {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+                max-width: 100%;
+            }
+            .keypad button {
+                padding: 10px;
+                font-size: 14px;
+            }
+            #code-input {
+                width: 90%;
+                font-size: 14px;
+            }
+            .dialog-section {
+                width: 90%;
+                padding: 15px;
+            }
+            .dialog-section p {
+                font-size: 12px;
+            }
+            .dialog-options button {
+                font-size: 10px;
+                padding: 8px;
+            }
+        }
+        /* เอฟเฟกต์พื้นหลัง */
+        .background-effect {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #fff;
-            border: 2px solid #000;
-            color: #ff3366;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 20px;
-            padding: 5px 10px;
-            cursor: pointer;
-            box-shadow: 2px 2px 0 #000;
-        }
-        .close-btn:hover {
-            background: #ff3366;
-            color: #fff;
-        }
-        .end-btn {
-            background: #ff66cc;
-            border: 6px solid #000;
-            color: #fff;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 24px;
-            padding: 15px 30px;
-            margin: 40px auto 20px;
-            display: block;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 #000;
-            transition: transform 0.1s ease;
-        }
-        .end-btn:hover {
-            background: #ff3366;
-            transform: translateY(-4px);
-        }
-        .end-btn:active {
-            transform: translateY(2px);
-            box-shadow: 2px 2px 0 #000;
-        }
-        .emoji {
-            position: absolute;
-            font-size: 20px;
-            color: #ff3366;
-            text-shadow: 1px 1px 0 #000;
+            width: 30px;
+            height: 30px;
+            background: #ff6699;
+            opacity: 0.7;
             z-index: 1;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .heart {
+            transform: rotate(45deg);
         }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ff6699;
+            border-radius: 50%;
         }
-        @keyframes sway {
-            0% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(3px) rotate(1deg); }
-            75% { transform: translateY(3px) rotateadministration(-1deg); }
-            100% { transform: translateY(0) rotate(0deg); }
+        .heart::before {
+            top: -15px;
+            left: 0;
         }
-        @keyframes floatFromTop {
-            0% { opacity: 1; transform: translateY(-20px); }
-            100% { opacity: 0; transform: translateY(100vh) translateX(10px); }
+        .heart::after {
+            top: 0;
+            left: -15px;
         }
-        @keyframes floatFromSide {
-            0% { opacity: 1; transform: translateX(-20px); }
-            100% { opacity: 0; transform: translateX(100vw) translateY(10px); }
+        .flower {
+            background: radial-gradient(circle, #ffcc99 20%, #ff6699 60%, transparent 70%);
+            border-radius: 50%;
         }
-        /* Responsive Design for Mobile */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            h1 { font-size: 18px; padding: 10px 20px; }
-            p { font-size: 8px; }
-            .timeline { max-width: 100%; }
-            .stage { width: 100%; margin: 20px 0; padding: 15px 15px 40px; }
-            .stage:nth-child(odd), .stage:nth-child(even) { margin-left: 0; margin-right: 0; }
-            .stage h3 { font-size: 12px; }
-            .card { height: 300px; }
-            .card-back { font-size: 10px; line-height: 16px; }
-            .quiz-btn { 
-                font-size: 20px; 
-                padding: 10px 20px; 
-                right: 0; 
-                left: 50%; 
-                top: auto; 
-                bottom: -60px; 
-                transform: translateX(-50%); 
-            }
-            .stage:nth-child(odd) .quiz-btn, .stage:nth-child(even) .quiz-btn { left: 50%; }
-            .quiz-question { 
-                width: 100%; 
-                font-size: 20px; 
-                left: 0; 
-                right: 0; 
-                top: 100%; 
-                margin-top: 20px; 
-            }
-            .quiz-question button { font-size: 16px; padding: 8px 15px; }
-            .result, .hbd-popup { width: 90%; padding: 20px; font-size: 24px; }
-            .hbd-popup img { width: 100%; }
-            .end-btn { font-size: 20px; padding: 10px 20px; }
-            .emoji { font-size: 16px; }
+        @keyframes floatUp {
+            0% { opacity: 0; transform: translateY(100vh); }
+            20% { opacity: 0.7; }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+        @keyframes growUp {
+            0% { opacity: 0; transform: scale(0) translateY(100vh); }
+            20% { opacity: 0.7; }
+            100% { opacity: 0; transform: scale(1.5) translateY(50vh); }
+        }
+        @keyframes titleWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-1deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(1deg); }
+        }
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <h1>12 Stages of Our Love 💕</h1>
-    <p>Scroll to relive our sweet 8-bit memories!</p>
-    <div class="timeline">
-        <div class="stage" data-stage="1">
-            <div class="stage-rope"></div>
-            <h3>First Shabu Meal</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./6.png" alt="First Shabu">
-                    </div>
-                    <div class="card-back">Our first shabu at Shabuparty was so delicious, and we've loved shabu ever since!</div>
-                </div>
+    <video id="bg-video" autoplay loop muted playsinline> <!-- เพิ่ม playsinline สำหรับมือถือ -->
+        <source src="./newnwebg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Welcome to the DuDuBuBu story of the past 2 years</h1>
+            <div class="subtitle">ENTER THE SPECIAL DATE</div>
+        </div>
+
+        <div class="input-section">
+            <h2>Enter Anniversary Code</h2>
+            <div class="example">Example: 03042003</div>
+            <input type="text" id="code-input" maxlength="8" readonly>
+            <div class="keypad">
+                <button data-value="1">1</button>
+                <button data-value="2">2</button>
+                <button data-value="3">3</button>
+                <button data-value="4">4</button>
+                <button data-value="5">5</button>
+                <button data-value="6">6</button>
+                <button data-value="7">7</button>
+                <button data-value="8">8</button>
+                <button data-value="9">9</button>
+                <button data-value="0">0</button>
+                <button id="clear">CLR</button>
             </div>
         </div>
-        <div class="stage" data-stage="2">
-            <div class="stage-rope"></div>
-            <h3>First Steak Meal</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./7.png" alt="First Steak">
-                    </div>
-                    <div class="card-back">After this steak meal, we decided to officially start talking!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(1)">Quiz</button>
-            <div class="quiz-question" id="q1">
-                <p>BuBu: What’s my favorite shabu place?</p>
-                <button onclick="checkAnswer(1, 'Shabuparty')">Shabuparty</button>
-                <button onclick="checkAnswer(1, 'Tee Noi')">Tee Noi</button>
-                <button onclick="checkAnswer(1, 'Shabushi')">Shabushi</button>
-                <button onclick="checkAnswer(1, 'Others')">Others</button>
+
+        <div class="dialog-section">
+            <p>Hey, do you remember what today is?</p>
+            <div class="dialog-options">
+                <button data-answer="wrong">Uh, your birthday?</button>
+                <button data-answer="wrong">Our first fight?</button>
+                <button data-answer="correct">Our 2-year anniversary, duh!</button>
+                <button data-answer="wrong">Just another day?</button>
             </div>
         </div>
-        <div class="stage" data-stage="3">
-            <div class="stage-rope"></div>
-            <h3>First Couple Photo</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./8.png" alt="First Photo">
-                    </div>
-                    <div class="card-back">After walking at the Kasetsart Fair, we took our first photo together on the Skywalk before heading back!</div>
-                </div>
-            </div>
-        </div>
-        <div class="stage" data-stage="4">
-            <div class="stage-rope"></div>
-            <h3>First Doll Gift</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./9.png" alt="First Doll">
-                    </div>
-                    <div class="card-back">After I complained about failing at ring toss, you won Bebe for me!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(2)">Quiz</button>
-            <div class="quiz-question" id="q2">
-                <p>BuBu: What’s my favorite food?</p>
-                <button onclick="checkAnswer(2, 'Teriyaki Saba Rice')">Teriyaki Saba Rice</button>
-                <button onclick="checkAnswer(2, 'Steak')">Steak</button>
-                <button onclick="checkAnswer(2, 'Shabu')">Shabu</button>
-                <button onclick="checkAnswer(2, 'Ramen')">Ramen</button>
-            </div>
-        </div>
-        <div class="stage" data-stage="5">
-            <div class="stage-rope"></div>
-            <h3>First Couple Profile</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./10.png" alt="First Profile">
-                    </div>
-                    <div class="card-back">During Spy x Family airing, we changed to this cute couple pic!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(3)">Quiz</button>
-            <div class="quiz-question" id="q3">
-                <p>BuBu: What was the first nickname we called each other?</p>
-                <button onclick="checkAnswer(3, 'DuDu-BuBu')">DuDu-BuBu</button>
-                <button onclick="checkAnswer(3, 'wanjai-wanjreab')">wanjai-wanjreab</button>
-                <button onclick="checkAnswer(3, 'Teeruk')">Teeruk</button>
-                <button onclick="checkAnswer(3, 'babe-honey')">babe-honey</button>
-            </div>
-        </div>
-        <div class="stage" data-stage="6">
-            <div class="stage-rope"></div>
-            <h3>First Hand Holding</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./11.png" alt="First Hand Holding">
-                    </div>
-                    <div class="card-back">After talking for a while, you asked to hold hands for the first time when dropping me off at the dorm!</div>
-                </div>
-            </div>
-        </div>
-        <div class="stage" data-stage="7">
-            <div class="stage-rope"></div>
-            <h3>First Shopping Together</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./12.png" alt="First Shopping">
-                    </div>
-                    <div class="card-back">After a movie, we saw anime collectible booths and decided to buy a few to unbox together!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(4)">Quiz</button>
-            <div class="quiz-question" id="q4">
-                <p>BuBu: What’s my favorite color?</p>
-                <button onclick="checkAnswer(4, 'Purple')">Purple</button>
-                <button onclick="checkAnswer(4, 'Red')">Red</button>
-                <button onclick="checkAnswer(4, 'Blue')">Blue</button>
-                <button onclick="checkAnswer(4, 'Green')">Green</button>
-            </div>
-        </div>
-        <div class="stage" data-stage="8">
-            <div class="stage-rope"></div>
-            <h3>First DuDu Birthday Celebration</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./13.png" alt="First Birthday">
-                    </div>
-                    <div class="card-back">Celebrated with DuDu, of course with shabu, but at a new Tee Noi branch we hadn’t tried!</div>
-                </div>
-            </div>
-        </div>
-        <div class="stage" data-stage="9">
-            <div class="stage-rope"></div>
-            <h3>Found Our Favorite Restaurant!</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./14.png" alt="Favorite Restaurant">
-                    </div>
-                    <div class="card-back">A delicious Japanese spot at Geki 4 we must visit again. DuDu used to love the shrimp curry so much!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(5)">Quiz</button>
-            <div class="quiz-question" id="q5">
-                <p>BuBu: Why did DuDu first get sulky with me?</p>
-                <button onclick="checkAnswer(5, 'I waited too long and got hungry')">I waited too long and got hungry</button>
-                <button onclick="checkAnswer(5, 'I forgot their birthday')">I forgot their birthday</button>
-                <button onclick="checkAnswer(5, 'I didn’t buy a gift')">I didn’t buy a gift</button>
-                <button onclick="checkAnswer(5, 'I ate shabu alone')">I ate shabu alone</button>
-            </div>
-        </div>
-        <div class="stage" data-stage="10">
-            <div class="stage-rope"></div>
-            <h3>First Blind Box Hunt</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./15.png" alt="First Blind Box">
-                    </div>
-                    <div class="card-back">During the blind box craze, we went to Saphan Lek and got both boxes and models!</div>
-                </div>
-            </div>
-        </div>
-        <div class="stage" data-stage="11">
-            <div class="stage-rope"></div>
-            <h3>First Gift from BuBu’s Effort</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./16.png" alt="First Gift">
-                    </div>
-                    <div class="card-back">After BuBu got into the dream faculty, DuDu quickly ordered a gift for BuBu!</div>
-                </div>
-            </div>
-        </div>
-        <div class="stage" data-stage="12">
-            <div class="stage-rope"></div>
-            <h3>First Time DuDu Got Sulky!</h3>
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="./17.png" alt="First Sulky">
-                    </div>
-                    <div class="card-back">After making BuBu wait so long he got hangry!</div>
-                </div>
-            </div>
-            <button class="quiz-btn" onclick="toggleQuiz(6)">Quiz</button>
-            <div class="quiz-question" id="q6">
-                <p>BuBu: Do you like the gift I made for you?</p>
-                <button onclick="checkAnswer(6, 'Yes')">Yes</button>
-                <button onclick="checkAnswer(6, 'No')">No</button>
-            </div>
-        </div>
+        <div class="overlay"></div>
+        <img src="./pageload.gif" class="loading-gif" alt="Loading">
     </div>
-    <div class="loading-screen" id="loading">
-        <p>Loading Your Score...</p>
-    </div>
-    <div class="result" id="result">
-        <p id="result-text"></p>
-        <button class="close-btn" onclick="closeResult()">X</button>
-    </div>
-    <div class="hbd-popup" id="hbd">
-        <p id="hbd-text"></p>
-        <img src="./HBD.png" alt="HBD Image">
-        <button class="close-btn" onclick="closeHbd()">X</button>
-    </div>
-    <button class="end-btn" onclick="window.location.href='home.html'">END</button>
-    <audio id="clickSound" src="https://www.myinstants.com/media/sounds/coin.wav"></audio>
-    <audio id="flipSound" src="https://www.myinstants.com/media/sounds/card-flip.wav"></audio>
+
     <script>
-        const clickSound = document.getElementById("clickSound");
-        const flipSound = document.getElementById("flipSound");
-        let score = 0;
-        let answered = [false, false, false, false, false, false];
-        const correctAnswers = [
-            "Shabuparty",
-            "Teriyaki Saba Rice",
-            "wanjai-wanjreab",
-            "Purple",
-            "I waited too long and got hungry",
-            "Yes"
-        ];
-
-        function updateStages() {
-            const stages = document.querySelectorAll(".stage");
-            const scrollPosition = window.scrollY + window.innerHeight;
-            stages.forEach((stage) => {
-                const stageTop = stage.offsetTop;
-                const stageHeight = stage.offsetHeight;
-                if (scrollPosition > stageTop + stageHeight / 2 && !stage.classList.contains("visible")) {
-                    stage.classList.add("visible");
-                }
-            });
+        // เอฟเฟกต์พื้นหลังหัวใจและดอกไม้
+        function createBackgroundEffect() {
+            const effect = document.createElement('div');
+            effect.classList.add('background-effect');
+            const isHeart = Math.random() > 0.5;
+            effect.classList.add(isHeart ? 'heart' : 'flower');
+            effect.style.left = `${Math.random() * 100}vw`;
+            effect.style.animation = isHeart ? 
+                `floatUp ${3 + Math.random() * 2}s linear` : 
+                `growUp ${3 + Math.random() * 2}s linear`;
+            document.body.appendChild(effect);
+            effect.addEventListener('animationend', () => effect.remove());
         }
-        window.addEventListener("scroll", updateStages);
-        window.addEventListener("load", updateStages);
+        // setInterval(createBackgroundEffect, 500); // ถ้าต้องการให้มีเอฟเฟกต์เพิ่มเติมจากวิดีโอ ให้ลบคอมเมนต์ออก
 
-        const stages = document.querySelectorAll(".stage");
-        stages.forEach(stage => {
-            const card = stage.querySelector(".card");
-            card.addEventListener("click", (e) => {
-                card.classList.toggle("flipped");
-                flipSound.play();
-                e.stopPropagation();
-            });
-            stage.addEventListener("click", (e) => {
-                clickSound.play();
-                e.stopPropagation();
+        // จัดการแป้นพิมพ์
+        const codeInput = document.getElementById('code-input');
+        const keypadButtons = document.querySelectorAll('.keypad button');
+        const dialogSection = document.querySelector('.dialog-section');
+        const overlay = document.querySelector('.overlay');
+        const loadingGif = document.querySelector('.loading-gif');
+        const correctCode = "26032023";
+
+        keypadButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.id === 'clear') {
+                    codeInput.value = '';
+                } else {
+                    if (codeInput.value.length < 8) {
+                        codeInput.value += button.getAttribute('data-value');
+                    }
+                    if (codeInput.value.length === 8) {
+                        if (codeInput.value === correctCode) {
+                            overlay.classList.add('visible');
+                            loadingGif.classList.add('visible');
+                            setTimeout(() => {
+                                loadingGif.classList.remove('visible');
+                                dialogSection.classList.add('visible');
+                            }, 1000);
+                        } else {
+                            codeInput.value = '';
+                            alert('Wrong code! Try again.');
+                        }
+                    }
+                }
             });
         });
 
-        function toggleQuiz(questionNum) {
-            const quiz = document.getElementById(`q${questionNum}`);
-            quiz.style.display = quiz.style.display === "block" ? "none" : "block";
-        }
-
-        function checkAnswer(questionNum, answer) {
-            if (answered[questionNum - 1]) return;
-            answered[questionNum - 1] = true;
-            if (answer === correctAnswers[questionNum - 1]) score++;
-            document.getElementById(`q${questionNum}`).style.display = "none";
-            if (questionNum === 6) {
-                const loading = document.getElementById("loading");
-                const result = document.getElementById("result");
-                const resultText = document.getElementById("result-text");
-                const hbd = document.getElementById("hbd");
-                const hbdText = document.getElementById("hbd-text");
-                loading.style.display = "flex";
-                setTimeout(() => {
-                    loading.style.display = "none";
-                    result.style.display = "block";
-                    let message = `Score: ${score}/5<br>`;
-                    if (score === 5) message += `Perfect score! 🎉<br>`;
-                    else message += `Try again next time!<br>`;
-                    resultText.innerHTML = message;
+        // จัดการตัวเลือก对话
+        const dialogButtons = document.querySelectorAll('.dialog-options button');
+        dialogButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.getAttribute('data-answer') === 'correct') {
                     setTimeout(() => {
-                        hbd.style.display = "block";
-                        if (answer === "Yes") hbdText.innerHTML = `BuBu said:<br>Happy early birthday, DuDu! 🎂<br>May we give each other gifts every year! 💕`;
-                        else hbdText.innerHTML = `BuBu said:<br>No hugs, no holding, stay 1 meter away! 😤`;
-                    }, 2000);
-                }, 2000);
-            }
-        }
-
-        function closeResult() { document.getElementById("result").style.display = "none"; }
-        function closeHbd() { document.getElementById("hbd").style.display = "none"; }
-
-        const emojis = ["💖", "🌷", "🍂", "🍀", "🎂"];
-        function createEmoji() {
-            const emoji = document.createElement("div");
-            emoji.className = "emoji";
-            emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            const spawnFrom = Math.random() < 0.5 ? "top" : "side";
-            if (spawnFrom === "top") {
-                emoji.style.left = Math.random() * window.innerWidth + "px";
-                emoji.style.top = "-20px";
-                emoji.style.animation = `floatFromTop ${Math.random() * 3 + 4}s linear infinite`;
-            } else {
-                emoji.style.top = Math.random() * window.innerHeight + window.scrollY + "px";
-                emoji.style.left = "-20px";
-                emoji.style.animation = `floatFromSide ${Math.random() * 3 + 4}s linear infinite`;
-            }
-            document.body.appendChild(emoji);
-            setTimeout(() => emoji.remove(), 7000);
-        }
-        setInterval(createEmoji, 500);
+                        window.location.href = '12stage.html'; // เปลี่ยนจาก timeline.html เป็น 12stage.html
+                    }, 500);
+                } else {
+                    alert('Nope! Try again.');
+                }
+            });
+        });
     </script>
 </body>
 </html>
